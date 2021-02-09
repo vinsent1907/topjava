@@ -1,0 +1,18 @@
+
+TABLE {
+    background: white; /* Цвет фона таблицы */
+    color: black; /* Цвет текста */
+}
+
+TD, TH {
+    background: #fff8dc; /* Цвет фона ячеек */
+    padding: 5px; /* Поля вокруг текста */
+}
+
+.normal {
+    color: green;
+}
+
+.excess {
+    color: red;
+}
