@@ -20,6 +20,11 @@ public abstract class AbstractBaseEntity {
         return id;
     }
 
+    public int id() {
+        Assert.notNull(id, "Entity must have id");
+        return id;
+    }
+
     public boolean isNew() {
         return this.id == null;
     }
