@@ -5,6 +5,7 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <br>
 <section>

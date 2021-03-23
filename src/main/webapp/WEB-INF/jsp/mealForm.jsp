@@ -2,16 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-
 <html>
-<head>
     <jsp:include page="fragments/headTag.jsp"/>
-<%--    <link rel="stylesheet" href="resources/css/style.css">--%>
-</head>
 <body>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-<jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
+    <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <h2><spring:message code="${meal.isNew() ? 'meal.add' : 'meal.edit'}"/></h2>
     <hr>
     <form method="post" action="meals">

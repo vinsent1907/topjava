@@ -18,42 +18,33 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 @Controller
-@RequestMapping(value = "/meals")
+@RequestMapping(value = "/meals") //убрал value
 public class JspMealController extends AbstractMealController {
-
     public JspMealController(MealService service) {
         super(service);
     }
 
-//    @GetMapping("/meals")
-//    public String meals(Model model){
-//        model.addAttribute("meals",getAll());
-//        return "meals";
-//    }
-
-    //    @GetMapping(params = "action=delete")
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         super.delete(getId(request));
         return "redirect:/meals";
     }
 
-    @GetMapping(params = "/update")
+    @GetMapping(params = "action=update")
     public String update(HttpServletRequest request, Model model) {
         model.addAttribute("meal", super.get(getId(request)));
         return "mealForm";
     }
 
-    //    @GetMapping(params = "action=create")
-    @GetMapping("/create")
+    @GetMapping(params = "action=create")
     public String create(Model model) {
-        model.addAttribute("meal", new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), "", 10));
+        model.addAttribute("meal", new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 300));
         return "mealForm";
     }
 
     @PostMapping
     public String save(HttpServletRequest request) {
-        Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
+        var meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
 
@@ -62,10 +53,10 @@ public class JspMealController extends AbstractMealController {
         } else {
             update(meal, getId(request));
         }
-        return "redirect:/meals";
+        return "redirect:meals";
     }
 
-    @PostMapping("/filter")
+    @PostMapping(params = "action=filter")
     public String getBetween(HttpServletRequest request, Model model) {
         var startDate = parseLocalDate(request.getParameter("startDate"));
         var endDate = parseLocalDate(request.getParameter("endDate"));

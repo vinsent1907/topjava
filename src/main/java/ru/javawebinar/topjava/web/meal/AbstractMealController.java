@@ -15,12 +15,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 
 @Controller
 public abstract class AbstractMealController {
-    private static final Logger log = LoggerFactory.getLogger(MealRestController.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMealController.class);
 
     private final MealService service;
 
@@ -41,7 +41,6 @@ public abstract class AbstractMealController {
         service.delete(id, userId);
     }
 
-
     public List<MealTo> getAll() {
         int userId = SecurityUtil.authUserId();
         log.info("getAll for user {}", userId);
@@ -57,7 +56,7 @@ public abstract class AbstractMealController {
 
     public void update(Meal meal, int id) {
         int userId = SecurityUtil.authUserId();
-        assureIdConsistent(meal,id);
+        assureIdConsistent(meal, id);
         log.info("update {} for user {}", meal, userId);
         service.update(meal, userId);
     }
