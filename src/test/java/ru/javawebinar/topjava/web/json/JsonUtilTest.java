@@ -37,4 +37,15 @@ class JsonUtilTest {
         System.out.println(json);
         assertThat(json, containsString("dateTimeUI"));
     }
+
+    @Test
+    void writeOnlyAccess() {
+        String json = JsonUtil.writeValue(UserTestData.user);
+        System.out.println(json);
+        assertThat(json, not(containsString("password")));
+        String jsonWithPass = UserTestData.jsonWithPassword(UserTestData.user, "newPass");
+        System.out.println(jsonWithPass);
+        User user = JsonUtil.readValue(jsonWithPass, User.class);
+        assertEquals(user.getPassword(), "newPass");
+    }
 }
