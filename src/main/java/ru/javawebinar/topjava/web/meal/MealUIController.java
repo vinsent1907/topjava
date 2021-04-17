@@ -1,12 +1,15 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.to.UserTo;
+import ru.javawebinar.topjava.util.ValidationUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,8 +22,16 @@ public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping
+    @JsonView(View.JsonUI.class)
     public List<MealTo> getAll() {
         return super.getAll();
+    }
+
+    @Override
+    @GetMapping( "/{id}")
+    @JsonView(View.JsonUI.class)
+    public Meal get(@PathVariable int id) {
+        return super.get(id);
     }
 
     @Override
@@ -40,6 +51,7 @@ public class MealUIController extends AbstractMealController {
 
     @Override
     @GetMapping("/filter")
+    @JsonView(View.JsonUI.class)
     public List<MealTo> getBetween(
             @RequestParam @Nullable LocalDate startDate,
             @RequestParam @Nullable LocalTime startTime,
