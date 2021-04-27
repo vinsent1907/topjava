@@ -24,7 +24,7 @@ public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private UserService service;
+    protected UserService service;
 
     @Autowired
     private UniqueMailValidator emailValidator;
@@ -65,15 +65,8 @@ public abstract class AbstractUserController {
         service.delete(id);
     }
 
-    public void update(User user, int id) {
-        log.info("update {} with id={}", user, id);
-        assureIdConsistent(user, id);
-        service.update(user);
-    }
-
     public void update(UserTo userTo, int id) {
         log.info("update {} with id={}", userTo, id);
-        assureIdConsistent(userTo, id);
         service.update(userTo);
     }
 
@@ -90,5 +83,15 @@ public abstract class AbstractUserController {
     public void enable(int id, boolean enabled) {
         log.info(enabled ? "enable {}" : "disable {}", id);
         service.enable(id, enabled);
+    }
+
+    protected void validateBeforeUpdate(HasId user, int id) throws BindException {
+        assureIdConsistent(user, id);
+        DataBinder binder = new DataBinder(user);
+        binder.addValidators(emailValidator, validator);
+        binder.validate();
+        if (binder.getBindingResult().hasErrors()) {
+            throw new BindException(binder.getBindingResult());
+        }
     }
 }
