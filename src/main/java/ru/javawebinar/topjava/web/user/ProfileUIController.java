@@ -25,12 +25,11 @@ public class ProfileUIController extends AbstractUserController {
     public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
         if (result.hasErrors()) {
             return "profile";
-        } else {
-            super.update(userTo, SecurityUtil.authUserId());
-            SecurityUtil.get().update(userTo);
-            status.setComplete();
-            return "redirect:/meals";
         }
+        super.update(userTo, authUser.getId());
+        authUser.setTo(userTo);
+        status.setComplete();
+        return "redirect:/meals";
     }
 
     @GetMapping("/register")
