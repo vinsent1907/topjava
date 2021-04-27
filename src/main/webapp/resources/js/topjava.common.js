@@ -10,7 +10,10 @@ function makeEditable(datatableOpts) {
                     "dataSrc": ""
                 },
                 "paging": false,
-                "info": true
+                "info": true,
+                "language": {
+                    "search": i18n["common.search"]
+                }
             }
         ));
 
